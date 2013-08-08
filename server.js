@@ -1,10 +1,11 @@
-var http = require("http");
+var express = require("express");
 var url = require("url");
+var app = express();
 
 //Command controller mapper
 var commandMapper = {
 	"/home": {
-		controller: "HomePageController",
+		controllerPath: "./HomePageController",
 		authRequired: false
 	},
 	"/user":{
@@ -14,25 +15,30 @@ var commandMapper = {
 	
 	}
 };
-function onRequest(request, response){
-	console.log(url.parse(request.url,true));
-	response.write("Server running");
-	response.end();
-};
 /**
 * Command pipe line handler for handeling all the commands
 * @param {object} http request object
 * @paran {object} http response object
 */
-function commandPipeLineHandler(request, response){
+function commandHandler(request, response){
 	var urlParams = url.parse(request.url,true),
 		pathName = urlParams.pathname,
-		controller;
-	if((pathName!==null && pathName==="/home") || pathName===null){
-		controller = require(commandMapper["/home"].controller);
+		controller,
+		page;
+	if((pathName!==null && pathName==="/home") || pathName==="/"){
+		page = commandMapper["/home"];
+		controller = require(page.controllerPath);
 	}else{
-
 	}
-	controller.initialize(request, response);
+	if(controller){
+		//console.log(controller);
+		controller(request, response);
+	}else{
+		response.send("Unknown command");
+	}
 };
-http.createServer(onRequest).listen(8888);
+app.get("/",function(request, response){
+	//console.log(url.parse(request.url,true));
+	commandHandler(request, response);
+});
+app.listen(3000);

@@ -10,11 +10,11 @@ var deviceSchema = mongoose.Schema({
 	version: String,
 	os: String,
 	owner: String,
-	hasCharger: Boolean,
-	hasUsbCable: Boolean,
+	charger: Boolean,
+	USBCable: Boolean,
 	picture: String,
 	deviceId: String,
-	userId: String,
+	chkUser: String,
 	canBeLeased: Boolean
 });
 
@@ -25,11 +25,11 @@ var sureshipad = new DeviceModel({
 	version: "2",
 	os: "IOS 6",
 	owner: "Oliver",
-	hasCharger: true,
-	hasUsbCable: true,
+	charger: true,
+	USBCable: true,
 	picture: "",
 	deviceId: "",
-	user: "Suresh Raj Kumar",
+	chkUser: "Suresh Raj Kumar",
 	canBeLeased: false
 });
 // sureshipad.save(function(err, device){

@@ -1,10 +1,5 @@
-define("HomePageController",
-	[],
-	function(){
-		return{
-			initialize: function(){
-				console.log("Inside the page controller");
-			}		
-		};			
-	}
-);		
+
+function homePageController(req, res){
+	res.send("Inside Home Page");
+}
+module.exports = homePageController;
