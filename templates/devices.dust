@@ -1,0 +1,11 @@
+{#devices}
+	<span class="name"><label >Device Name</label>{name}</span>
+	<span class="name"><label >Version</label>{version}</span>
+	<span class="name"><label >Operating system</label>{os}</span>
+	<span class="name"><label >Device Owner</label>{owner}</span>
+	<span class="name"><label >USB cable</label>{USBCable}</span>
+	<span class="name"><label >Charger</label>{charger}</span>
+	<span class="name"><label >Checkout by</label>{chkUser}</span>
+	<span class="name"><label >Device Picture</label>{picture}</span>
+	<span class="name"><label >Device Name</label>{name}</span>
+{/devices}

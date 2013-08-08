@@ -1,7 +1,13 @@
 var express = require("express");
-var url = require("url");
 var app = express();
+var url = require("url");
+var cons = require("consolidate");
 
+app.engine("dust", cons.dust);
+app.configure(function(){
+	app.set("view engine", "dust");	
+	app.set("views","templates");
+});
 //Command controller mapper
 var commandMapper = {
 	"/home": {
@@ -20,25 +26,24 @@ var commandMapper = {
 * @param {object} http request object
 * @paran {object} http response object
 */
-function commandHandler(request, response){
-	var urlParams = url.parse(request.url,true),
+function commandHandler(req, res){
+	var urlParams = url.parse(req.url,true),
 		pathName = urlParams.pathname,
 		controller,
 		page;
+	console.log(req.route);
 	if((pathName!==null && pathName==="/home") || pathName==="/"){
 		page = commandMapper["/home"];
 		controller = require(page.controllerPath);
 	}else{
 	}
 	if(controller){
-		//console.log(controller);
-		controller(request, response);
+		controller(req, res, app);
 	}else{
-		response.send("Unknown command");
+		res.send("Unknown command");
 	}
 };
-app.get("/",function(request, response){
-	//console.log(url.parse(request.url,true));
-	commandHandler(request, response);
-});
+app.get("/",commandHandler);
+app.get("*",commandHandler);
+
 app.listen(3000);
